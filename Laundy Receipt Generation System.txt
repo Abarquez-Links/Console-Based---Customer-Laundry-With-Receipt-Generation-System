@@ -215,38 +215,49 @@ public class App {
                             double price = staffChoice.equals("1") ? 60.0 : 160.0;
                             String service = staffChoice.equals("1") ? "Wash Only" : "Wash and Dry";
 
-                            System.out.print("INPUT NUMBER OF LOADS: ");
-                            try {
-                                int loads = Integer.parseInt(sc.nextLine());
-                                double total = price * loads;
-                                String formattedDate = LocalDateTime.now().format(dtf);
-
-                                String recordString = String.format("Name: %-12s | Service: %-12s | Loads: %d | Total: PHP %.2f | Date: %s", 
-                                                                    name.toUpperCase(), service, loads, total, formattedDate);
-                                customerList.add(recordString);
-
-                                System.out.println("\n===============================================");
-                                System.out.println("                OFFICIAL RECEIPT                ");
-                                System.out.println("===============================================");
-                                System.out.println(" Receipt No:    LND-" + (int) (Math.random() * 9000 + 1000));
-                                System.out.println(" Date:          " + formattedDate);
-                                System.out.println(" Customer:      " + name.toUpperCase());
-                                System.out.println("-----------------------------------------------");
-                                System.out.println(" Service:       " + service);
-                                System.out.println(" Loads:         " + loads);
-                                System.out.println(" Price/Load:    PHP " + price);
-                                System.out.println(" TOTAL AMOUNT:  PHP " + total);
-                                System.out.println("===============================================");
-                                System.out.println("   PLEASE SHOW THIS RECEIPT TO THE STAFF       ");
-                                System.out.println("      WHEN PICKING UP YOUR LAUNDRY BAGS.        ");
-                                System.out.println("===============================================");
-
-                                inStaff = false;
-                                staffActive = false; 
-
-                            } catch (Exception e) {
-                                System.out.println("Invalid input! Please enter a numeric value for loads.");
+                            // Logic to handle 0 loads
+                            int loads = 0;
+                            while (true) {
+                                System.out.print("INPUT NUMBER OF LOADS: ");
+                                try {
+                                    loads = Integer.parseInt(sc.nextLine());
+                                    if (loads > 0) {
+                                        break; // Proceed if valid
+                                    } else {
+                                        System.out.println("Invalid amount! Please enter a load greater than 0.");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Invalid input! Please enter a numeric value for loads.");
+                                }
                             }
+                            // END
+
+                            double total = price * loads;
+                            String formattedDate = LocalDateTime.now().format(dtf);
+
+                            String recordString = String.format("Name: %-12s | Service: %-12s | Loads: %d | Total: PHP %.2f | Date: %s", 
+                                                                name.toUpperCase(), service, loads, total, formattedDate);
+                            customerList.add(recordString);
+
+                            System.out.println("\n===============================================");
+                            System.out.println("                OFFICIAL RECEIPT                ");
+                            System.out.println("===============================================");
+                            System.out.println(" Receipt No:    LND-" + (int) (Math.random() * 9000 + 1000));
+                            System.out.println(" Date:          " + formattedDate);
+                            System.out.println(" Customer:      " + name.toUpperCase());
+                            System.out.println("-----------------------------------------------");
+                            System.out.println(" Service:       " + service);
+                            System.out.println(" Loads:         " + loads);
+                            System.out.println(" Price/Load:    PHP " + price);
+                            System.out.println(" TOTAL AMOUNT:  PHP " + total);
+                            System.out.println("===============================================");
+                            System.out.println("   PLEASE SHOW THIS RECEIPT TO THE STAFF       ");
+                            System.out.println("      WHEN PICKING UP YOUR LAUNDRY BAGS.        ");
+                            System.out.println("===============================================");
+
+                            inStaff = false;
+                            staffActive = false; 
+
                         } else if (staffChoice.equals("3")) {
                             inStaff = false;
                             staffActive = false;
